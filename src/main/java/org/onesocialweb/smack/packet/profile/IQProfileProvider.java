@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.smack.packet.profile;
 
@@ -24,27 +24,26 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class IQProfileProvider implements IQProvider {
 
-	@Override
-	public IQ parseIQ(XmlPullParser parser) throws Exception {
-		final IQProfileQuery iq = new IQProfileQuery();
-		final XppVCard4Reader reader = new DefaultXppVCard4Reader();
+    @Override
+    public IQ parseIQ(XmlPullParser parser) throws Exception {
+        final IQProfileQuery iq = new IQProfileQuery();
+        final XppVCard4Reader reader = new DefaultXppVCard4Reader();
 
-		boolean done = false;
+        boolean done = false;
 
-		while (!done) {
-			int eventType = parser.next();
-			if (eventType == XmlPullParser.START_TAG) {
-				if (parser.getName().equals("vcard")) {
-					iq.setProfile(reader.parse(parser));
-				}
-			} else if (eventType == XmlPullParser.END_TAG) {
+        while (!done) {
+            int eventType = parser.next();
+            if (eventType == XmlPullParser.START_TAG) {
+                if (parser.getName().equals("vcard")) {
+                    iq.setProfile(reader.parse(parser));
+                }
+            } else if (eventType == XmlPullParser.END_TAG) {
                 if (parser.getName().equals("query")) {
                     done = true;
                 }
             }
-		}
+        }
 
-		return iq;
-	}
-
+        return iq;
+    }
 }

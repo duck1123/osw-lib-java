@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.client;
 
@@ -22,12 +22,11 @@ import org.onesocialweb.model.activity.ActivityEntry;
 
 public interface InboxEventHandler {
 
-	public void onMessageReceived(ActivityEntry entry);
-	
-	public void onMessageDeleted(ActivityEntry entry);
-	
-	public void onMessageUpdated(ActivityEntry entry);
-	
-	public void onRefresh(List<ActivityEntry> activities);
-	
+    public void onMessageReceived(ActivityEntry entry);
+
+    public void onMessageDeleted(ActivityEntry entry);
+
+    public void onMessageUpdated(ActivityEntry entry);
+
+    public void onRefresh(List<ActivityEntry> activities);
 }

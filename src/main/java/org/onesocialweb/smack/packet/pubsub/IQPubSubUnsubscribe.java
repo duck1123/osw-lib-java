@@ -12,29 +12,29 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.smack.packet.pubsub;
 
 import org.jivesoftware.smack.packet.IQ;
 
 public class IQPubSubUnsubscribe extends IQ {
-	
-	private final String node;
-	
-	private final String jid;
-	
-	public IQPubSubUnsubscribe(String node, String jid) {
-		this.node = node;
-		this.jid = jid;
-	}
-	
-	@Override
-	public String getChildElementXML() {
+
+    private final String node;
+
+    private final String jid;
+
+    public IQPubSubUnsubscribe(String node, String jid) {
+        this.node = node;
+        this.jid = jid;
+    }
+
+    @Override
+    public String getChildElementXML() {
         StringBuilder buf = new StringBuilder();
         buf.append("<pubsub xmlns='http://jabber.org/protocol/pubsub'>");
         buf.append("<unsubscribe  node='" + node + "' jid='" + jid + "' />");
         buf.append("</pubsub>");
         return buf.toString();
-	}
+    }
 }

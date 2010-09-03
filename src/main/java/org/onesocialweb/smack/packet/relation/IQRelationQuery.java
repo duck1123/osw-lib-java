@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.smack.packet.relation;
 
@@ -24,31 +24,32 @@ import org.onesocialweb.xml.writer.RelationXmlWriter;
 
 public class IQRelationQuery extends IQ {
 
-	public static String NAME = "query";
-	
-	public static String NAMESPACE = "http://onesocialweb.org/spec/1.0/relations#query";
-	
-	private List<Relation> relations;
-	
-	public List<Relation> getRelations() {
-		return relations;
-	}
+    public static String NAME = "query";
 
-	public void setRelations(List<Relation> relations) {
-		this.relations = relations;
-	}
+    public static String NAMESPACE = "http://onesocialweb.org/spec/1.0/relations#query";
 
-	@Override
-	public String getChildElementXML() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<" + NAME + " xmlns=\"" + NAMESPACE + "\">");
-		if (relations != null && relations.size() > 0) {
-			final RelationXmlWriter writer = new RelationXmlWriter();
-			for (Relation relation : relations) {
-				writer.toXml(relation, buffer);
-			}
-		}
-		buffer.append("</" + NAME + ">");
-		return buffer.toString();
-	}
+    private List<Relation> relations;
+
+    public List<Relation> getRelations() {
+        return relations;
+    }
+
+    public void setRelations(List<Relation> relations) {
+        this.relations = relations;
+    }
+
+    @Override
+    public String getChildElementXML() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("<" + NAME + " xmlns=\"" + NAMESPACE + "\">");
+        if (relations != null && relations.size() > 0) {
+            final RelationXmlWriter writer = new RelationXmlWriter();
+            for (Relation relation : relations) {
+                writer.toXml(relation, buffer);
+            }
+        }
+
+        buffer.append("</" + NAME + ">");
+        return buffer.toString();
+    }
 }

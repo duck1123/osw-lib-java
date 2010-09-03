@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.smack.packet.pubsub;
 
@@ -29,10 +29,10 @@ import org.xmlpull.v1.XmlPullParserException;
 
 public class ProviderPubSubIQ implements IQProvider {
 
-	@Override
-	public IQ parseIQ(XmlPullParser parser) throws Exception {	
+    @Override
+    public IQ parseIQ(XmlPullParser parser) throws Exception {
 
-		// Process the child element
+        // Process the child element
         if (parser.nextTag() == XmlPullParser.START_TAG) {
 
             String childElement = parser.getName();
@@ -40,108 +40,108 @@ public class ProviderPubSubIQ implements IQProvider {
             if (childElement.equals("publish")) {
                 return parsePublish(parser);
             } else if (childElement.equals("items")) {
-            	return parseItems(parser);
+                return parseItems(parser);
             } else if (childElement.equals("subscribe")) {
-            	return parseSubscribe(parser);
+                return parseSubscribe(parser);
             } else if (childElement.equals("unsubscribe")) {
-            	return parseUnsubscribe(parser);
+                return parseUnsubscribe(parser);
             } else if (childElement.equals("subscriptions")) {
-            	return parseSubscriptions(parser);
+                return parseSubscriptions(parser);
             } else if (childElement.equals("subscribers")) {
-            	return parseSubscribers(parser);
+                return parseSubscribers(parser);
             }
         }
-        
+
         return null;
-	}
-	
-	private IQ parsePublish(XmlPullParser parser) {
-		String node = parser.getAttributeValue(null, "node");
-		return new IQPubSubPublish(node, null);
-	}
-	
-	private IQ parseItems(XmlPullParser parser) throws IOException, XmlPullParserException {
-		final DefaultXppActivityReader reader = new DefaultXppActivityReader();
-		final List<ActivityEntry> entries = new ArrayList<ActivityEntry>();
-		final String node = parser.getAttributeValue(null, "node");
-		boolean done = false;
+    }
 
-		while (!done) {
-			int eventType = parser.next();
-			if (eventType == XmlPullParser.START_TAG) {
-				if (parser.getName().equals("entry")) {
-					entries.add(reader.parse(parser));
-				}
-			} else if (eventType == XmlPullParser.END_TAG) {
-				if (parser.getName().equals("pubsub")) {
-					done = true;
-				}
-			}
-		}
+    private IQ parsePublish(XmlPullParser parser) {
+        String node = parser.getAttributeValue(null, "node");
+        return new IQPubSubPublish(node, null);
+    }
 
-		IQPubSubItems iq = new IQPubSubItems(node);
-		iq.setEntries(entries);
+    private IQ parseItems(XmlPullParser parser) throws IOException, XmlPullParserException {
+        final DefaultXppActivityReader reader = new DefaultXppActivityReader();
+        final List<ActivityEntry> entries = new ArrayList<ActivityEntry>();
+        final String node = parser.getAttributeValue(null, "node");
+        boolean done = false;
 
-		return iq;
-	}
+        while (!done) {
+            int eventType = parser.next();
+            if (eventType == XmlPullParser.START_TAG) {
+                if (parser.getName().equals("entry")) {
+                    entries.add(reader.parse(parser));
+                }
+            } else if (eventType == XmlPullParser.END_TAG) {
+                if (parser.getName().equals("pubsub")) {
+                    done = true;
+                }
+            }
+        }
 
-	private IQ parseSubscribe(XmlPullParser parser) {
-		String node = parser.getAttributeValue(null, "node");
-		return new IQPubSubSubscribe(node, null);
-	}
-	
-	private IQ parseUnsubscribe(XmlPullParser parser) {
-		String node = parser.getAttributeValue(null, "node");
-		return new IQPubSubUnsubscribe(node, null);
-	}
-	
-	private IQ parseSubscriptions(XmlPullParser parser) throws IOException, XmlPullParserException {
-		final List<String> subscriptions = new ArrayList<String>();
-		final String node = parser.getAttributeValue(null, "node");
-		boolean done = false;
+        IQPubSubItems iq = new IQPubSubItems(node);
+        iq.setEntries(entries);
 
-		while (!done) {
-			int eventType = parser.next();
-			if (eventType == XmlPullParser.START_TAG) {
-				if (parser.getName().equals("subscription")) {
-					String jid = parser.getAttributeValue(null, "jid");
-					if (jid != null) subscriptions.add(jid);
-				}
-			} else if (eventType == XmlPullParser.END_TAG) {
-				if (parser.getName().equals("pubsub")) {
-					done = true;
-				}
-			}
-		}
+        return iq;
+    }
 
-		IQPubSubSubscriptions iq = new IQPubSubSubscriptions(node);
-		iq.setSubscriptions(subscriptions);
+    private IQ parseSubscribe(XmlPullParser parser) {
+        String node = parser.getAttributeValue(null, "node");
+        return new IQPubSubSubscribe(node, null);
+    }
 
-		return iq;
-	}
-	
-	private IQ parseSubscribers(XmlPullParser parser) throws IOException, XmlPullParserException {
-		final List<String> subscribers = new ArrayList<String>();
-		final String node = parser.getAttributeValue(null, "node");
-		boolean done = false;
+    private IQ parseUnsubscribe(XmlPullParser parser) {
+        String node = parser.getAttributeValue(null, "node");
+        return new IQPubSubUnsubscribe(node, null);
+    }
 
-		while (!done) {
-			int eventType = parser.next();
-			if (eventType == XmlPullParser.START_TAG) {
-				if (parser.getName().equals("subscriber")) {
-					String jid = parser.getAttributeValue(null, "jid");
-					if (jid != null) subscribers.add(jid);
-				}
-			} else if (eventType == XmlPullParser.END_TAG) {
-				if (parser.getName().equals("pubsub")) {
-					done = true;
-				}
-			}
-		}
+    private IQ parseSubscriptions(XmlPullParser parser) throws IOException, XmlPullParserException {
+        final List<String> subscriptions = new ArrayList<String>();
+        final String node = parser.getAttributeValue(null, "node");
+        boolean done = false;
 
-		IQPubSubSubscribers iq = new IQPubSubSubscribers(node);
-		iq.setSubscribers(subscribers);
+        while (!done) {
+            int eventType = parser.next();
+            if (eventType == XmlPullParser.START_TAG) {
+                if (parser.getName().equals("subscription")) {
+                    String jid = parser.getAttributeValue(null, "jid");
+                    if (jid != null) subscriptions.add(jid);
+                }
+            } else if (eventType == XmlPullParser.END_TAG) {
+                if (parser.getName().equals("pubsub")) {
+                    done = true;
+                }
+            }
+        }
 
-		return iq;
-	}
+        IQPubSubSubscriptions iq = new IQPubSubSubscriptions(node);
+        iq.setSubscriptions(subscriptions);
+
+        return iq;
+    }
+
+    private IQ parseSubscribers(XmlPullParser parser) throws IOException, XmlPullParserException {
+        final List<String> subscribers = new ArrayList<String>();
+        final String node = parser.getAttributeValue(null, "node");
+        boolean done = false;
+
+        while (!done) {
+            int eventType = parser.next();
+            if (eventType == XmlPullParser.START_TAG) {
+                if (parser.getName().equals("subscriber")) {
+                    String jid = parser.getAttributeValue(null, "jid");
+                    if (jid != null) subscribers.add(jid);
+                }
+            } else if (eventType == XmlPullParser.END_TAG) {
+                if (parser.getName().equals("pubsub")) {
+                    done = true;
+                }
+            }
+        }
+
+        IQPubSubSubscribers iq = new IQPubSubSubscribers(node);
+        iq.setSubscribers(subscribers);
+
+        return iq;
+    }
 }

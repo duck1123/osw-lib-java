@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.smack.packet.profile;
 
@@ -22,27 +22,27 @@ import org.onesocialweb.xml.writer.VCard4XmlWriter;
 
 public class IQProfilePublish extends IQ {
 
-	public static String NAME = "publish";
-	
-	public static String NAMESPACE = "http://onesocialweb.org/spec/1.0/vcard4#publish";
-	
-	private Profile profile;
-	
-	public Profile getProfile() {
-		return profile;
-	}
+    public static String NAME = "publish";
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
+    public static String NAMESPACE = "http://onesocialweb.org/spec/1.0/vcard4#publish";
 
-	@Override
-	public String getChildElementXML() {
-		StringBuffer buffer = new StringBuffer();
-		VCard4XmlWriter writer = new VCard4XmlWriter();
-		buffer.append("<" + NAME + " xmlns=\"" + NAMESPACE + "\">");
-		writer.toXml(profile, buffer);
-		buffer.append("</" + NAME + ">");
-		return buffer.toString();
-	}
+    private Profile profile;
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    @Override
+    public String getChildElementXML() {
+        StringBuffer buffer = new StringBuffer();
+        VCard4XmlWriter writer = new VCard4XmlWriter();
+        buffer.append("<" + NAME + " xmlns=\"" + NAMESPACE + "\">");
+        writer.toXml(profile, buffer);
+        buffer.append("</" + NAME + ">");
+        return buffer.toString();
+    }
 }

@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.smack.packet.pubsub;
 
@@ -22,28 +22,28 @@ import org.jivesoftware.smack.packet.IQ;
 
 public class IQPubSubSubscribers extends IQ {
 
-	private final String node;
+    private final String node;
 
-	private List<String> subscribers;
+    private List<String> subscribers;
 
-	public IQPubSubSubscribers(String node) {
-		this.node = node;
-	}
+    public IQPubSubSubscribers(String node) {
+        this.node = node;
+    }
 
-	public List<String> getSubscribers() {
-		return subscribers;
-	}
+    public List<String> getSubscribers() {
+        return subscribers;
+    }
 
-	public void setSubscribers(List<String> subscribers) {
-		this.subscribers = subscribers;
-	}
+    public void setSubscribers(List<String> subscribers) {
+        this.subscribers = subscribers;
+    }
 
-	@Override
-	public String getChildElementXML() {
-		final StringBuffer buf = new StringBuffer();
-		buf.append("<pubsub xmlns='http://jabber.org/protocol/pubsub'>");
-		buf.append("<subscribers node='" + node + "' />");
-		buf.append("</pubsub>");
-		return buf.toString();
-	}
+    @Override
+    public String getChildElementXML() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append("<pubsub xmlns='http://jabber.org/protocol/pubsub'>");
+        buf.append("<subscribers node='" + node + "' />");
+        buf.append("</pubsub>");
+        return buf.toString();
+    }
 }

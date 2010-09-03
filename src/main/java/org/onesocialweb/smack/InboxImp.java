@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.smack;
 
@@ -28,115 +28,115 @@ import org.onesocialweb.model.activity.ActivityEntry;
 
 public class InboxImp implements Inbox {
 
-	private final List<InboxEventHandler> handlers = new ArrayList<InboxEventHandler>();
+    private final List<InboxEventHandler> handlers = new ArrayList<InboxEventHandler>();
 
-	private final OswServiceImp service;
+    private final OswServiceImp service;
 
-	private List<ActivityEntry> entries = new ArrayList<ActivityEntry>();
-	
-	public InboxImp(OswServiceImp service) {
-		this.service = service;
-	}
-	
-	@Override
-	public List<ActivityEntry> getEntries() {
-		return entries;
-	}
+    private List<ActivityEntry> entries = new ArrayList<ActivityEntry>();
 
-	@Override
-	public boolean refresh() {
-		try {
-			return service.refreshInbox();
-		} catch (ConnectionRequired e) {
+    public InboxImp(OswServiceImp service) {
+        this.service = service;
+    }
 
-		} catch (AuthenticationRequired e) {
+    @Override
+    public List<ActivityEntry> getEntries() {
+        return entries;
+    }
 
-		} catch (RequestException e) {
+    @Override
+    public boolean refresh() {
+        try {
+            return service.refreshInbox();
+        } catch (ConnectionRequired e) {
 
-		}
-		return false;
-	}
+        } catch (AuthenticationRequired e) {
 
-	@Override
-	public void registerInboxEventHandler(InboxEventHandler handler) {
-		handlers.add(handler);
-	}
+        } catch (RequestException e) {
 
-	@Override
-	public void unregisterInboxEventHandler(InboxEventHandler handler) {
-		handlers.remove(handler);
-	}
+        }
+        return false;
+    }
 
-	@Override
-	public void addEntry(ActivityEntry entry) {
-		entries.add(0, entry);
-		notifyMessageReceived(entry);
-	}
+    @Override
+    public void registerInboxEventHandler(InboxEventHandler handler) {
+        handlers.add(handler);
+    }
 
-	@Override
-	public void removeEntry(ActivityEntry entry) {
-		entries.remove(entry);
-		notifyMessageDeleted(entry);
-	}
-	
-	@Override
-	public void updateEntry(ActivityEntry entry) {
-		ActivityEntry previousActivity = getEntry(entry.getId());
-		if (previousActivity != null) {
-			int index = entries.indexOf(previousActivity);
-			entries.add(index, entry);
-			entries.remove(previousActivity);
-			notifyMessageUpdated(entry);
-		}
-	}
+    @Override
+    public void unregisterInboxEventHandler(InboxEventHandler handler) {
+        handlers.remove(handler);
+    }
 
-	@Override
-	public void setEntries(List<ActivityEntry> entries) {
-		this.entries = entries;
-		notifyRefresh(entries);
-	}
-	
-	private void notifyMessageReceived(ActivityEntry activity) {
-		for (InboxEventHandler handler : handlers) {
-			handler.onMessageReceived(activity);
-		}
-	}
-	
-	private void notifyMessageUpdated(ActivityEntry activity) {
-		for (InboxEventHandler handler : handlers) {
-			handler.onMessageUpdated(activity);
-		}
-	}	
-	
-	private void notifyMessageDeleted(ActivityEntry activity) {
-		for (InboxEventHandler handler : handlers) {
-			handler.onMessageDeleted(activity);
-		}
-	}
-	
-	private void notifyRefresh(List<ActivityEntry> activities) {
-		for (InboxEventHandler handler : handlers) {
-			handler.onRefresh(activities);
-		}
-	}
+    @Override
+    public void addEntry(ActivityEntry entry) {
+        entries.add(0, entry);
+        notifyMessageReceived(entry);
+    }
 
-	@Override
-	public int getSize() {
-		if (entries != null) {
-			return entries.size();
-		} else {
-			return 0;
-		}
-	}
+    @Override
+    public void removeEntry(ActivityEntry entry) {
+        entries.remove(entry);
+        notifyMessageDeleted(entry);
+    }
 
-	@Override
-	public ActivityEntry getEntry(String id) {
-		for (ActivityEntry entry : entries) {
-			if (entry.getId().equals(id)) {
-				return entry;
-			}
-		}
-		return null;
-	}
+    @Override
+    public void updateEntry(ActivityEntry entry) {
+        ActivityEntry previousActivity = getEntry(entry.getId());
+        if (previousActivity != null) {
+            int index = entries.indexOf(previousActivity);
+            entries.add(index, entry);
+            entries.remove(previousActivity);
+            notifyMessageUpdated(entry);
+        }
+    }
 
+    @Override
+    public void setEntries(List<ActivityEntry> entries) {
+        this.entries = entries;
+        notifyRefresh(entries);
+    }
+
+    private void notifyMessageReceived(ActivityEntry activity) {
+        for (InboxEventHandler handler : handlers) {
+            handler.onMessageReceived(activity);
+        }
+    }
+
+    private void notifyMessageUpdated(ActivityEntry activity) {
+        for (InboxEventHandler handler : handlers) {
+            handler.onMessageUpdated(activity);
+        }
+    }
+
+    private void notifyMessageDeleted(ActivityEntry activity) {
+        for (InboxEventHandler handler : handlers) {
+            handler.onMessageDeleted(activity);
+        }
+    }
+
+    private void notifyRefresh(List<ActivityEntry> activities) {
+        for (InboxEventHandler handler : handlers) {
+            handler.onRefresh(activities);
+        }
+    }
+
+    @Override
+    public int getSize() {
+        if (entries != null) {
+            return entries.size();
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public ActivityEntry getEntry(String id) {
+        for (ActivityEntry entry : entries) {
+            if (entry.getId().equals(id)) {
+                return entry;
+            }
+        }
+
+        return null;
+    }
 }

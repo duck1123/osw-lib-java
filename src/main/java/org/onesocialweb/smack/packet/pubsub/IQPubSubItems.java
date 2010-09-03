@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.smack.packet.pubsub;
 
@@ -23,35 +23,35 @@ import org.onesocialweb.model.activity.ActivityEntry;
 
 public class IQPubSubItems extends IQ {
 
-	private final String node;
+    private final String node;
 
-	private List<ActivityEntry> entries;
+    private List<ActivityEntry> entries;
 
-	public IQPubSubItems(String node) {
-		this.node = node;
-	}
+    public IQPubSubItems(String node) {
+        this.node = node;
+    }
 
-	public List<ActivityEntry> getEntries() {
-		return entries;
-	}
+    public List<ActivityEntry> getEntries() {
+        return entries;
+    }
 
-	public void setEntries(List<ActivityEntry> entries) {
-		this.entries = entries;
-	}
+    public void setEntries(List<ActivityEntry> entries) {
+        this.entries = entries;
+    }
 
-	@Override
-	public String getChildElementXML() {
-		final StringBuffer buf = new StringBuffer();
-		buf.append("<pubsub xmlns='http://jabber.org/protocol/pubsub'>");
-		if ((entries==null) || (entries.size()==0))
-			buf.append("<items node='" + node + "' />");
-		else {
-			buf.append("<items node='" + node + "' >");
-			buf.append("<item id='"+ entries.get(0).getId() +"'>" );
-		    buf.append("</item>");  
-		    buf.append("</items>");
-		}
-		buf.append("</pubsub>");
-		return buf.toString();
-	}
+    @Override
+    public String getChildElementXML() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append("<pubsub xmlns='http://jabber.org/protocol/pubsub'>");
+        if ((entries==null) || (entries.size()==0))
+            buf.append("<items node='" + node + "' />");
+        else {
+            buf.append("<items node='" + node + "' >");
+            buf.append("<item id='"+ entries.get(0).getId() +"'>" );
+            buf.append("</item>");
+            buf.append("</items>");
+        }
+        buf.append("</pubsub>");
+        return buf.toString();
+    }
 }

@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.smack.packet.relation;
 
@@ -28,30 +28,29 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class IQRelationProvider implements IQProvider {
 
-	@Override
-	public IQ parseIQ(XmlPullParser parser) throws Exception {
-		final IQRelationQuery iq = new IQRelationQuery();
-		final DefaultXppRelationReader reader = new DefaultXppRelationReader();
-		final List<Relation> relations = new ArrayList<Relation>();
-		
-		boolean done = false;
+    @Override
+    public IQ parseIQ(XmlPullParser parser) throws Exception {
+        final IQRelationQuery iq = new IQRelationQuery();
+        final DefaultXppRelationReader reader = new DefaultXppRelationReader();
+        final List<Relation> relations = new ArrayList<Relation>();
 
-		while (!done) {
-			int eventType = parser.next();
-			if (eventType == XmlPullParser.START_TAG) {
-				if (parser.getName().equals(Onesocialweb.RELATION_ELEMENT)) {
-					relations.add(reader.parse(parser));
-				}
-			} else if (eventType == XmlPullParser.END_TAG) {
+        boolean done = false;
+
+        while (!done) {
+            int eventType = parser.next();
+            if (eventType == XmlPullParser.START_TAG) {
+                if (parser.getName().equals(Onesocialweb.RELATION_ELEMENT)) {
+                    relations.add(reader.parse(parser));
+                }
+            } else if (eventType == XmlPullParser.END_TAG) {
                 if (parser.getName().equals("query")) {
                     done = true;
                 }
             }
-		}
-		
-		iq.setRelations(relations);
-		
-		return iq;
-	}
+        }
+
+        iq.setRelations(relations);
+        return iq;
+    }
 
 }
