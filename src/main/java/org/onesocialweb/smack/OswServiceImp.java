@@ -102,6 +102,14 @@ public class OswServiceImp implements OswService {
     /** A reference to the current XMPP connection */
     protected XMPPConnection connection;
 
+    public XMPPConnection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(XMPPConnection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public String getHostname() {
         if (connection != null) {
